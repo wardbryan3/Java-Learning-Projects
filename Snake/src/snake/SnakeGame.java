@@ -21,6 +21,7 @@ import javax.swing.*;
 
 public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 	private class Tile{
+		
 		int x;
 		
 		int y;
@@ -30,6 +31,8 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 			this.y = y;
 		}
 	}
+
+	private HighScoreManager highScoreManager;
 	int boardWidth;
 	int boardHeight;
 	int tileSize = 25;
@@ -50,6 +53,7 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 	int velocityY;
 	boolean gameOver = false;
 	int score=0;
+	boolean restart=false;
 	 
 	
 	
@@ -112,7 +116,14 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 		}
 		else g.setColor(Color.white);
 			g.drawString("Score: "+ score, tileSize - 16, tileSize);
-	}
+	
+		// Restart ?
+		if(restart) {
+			
+			}
+		
+			
+		}
 	
 	public void placeFood() {
 	food.x = random.nextInt(boardWidth/tileSize); //600/25
@@ -201,11 +212,24 @@ public class SnakeGame extends JPanel implements ActionListener, KeyListener {
 
 	public void gameOver(boolean gameOver,Graphics g) {
 		if (gameOver) {
-			g.drawString("GAME OVER "  + "Final Score: " +score, 200,250);
+			HighScoreManager.saveHighScore(score);
+			g.drawString("GAME OVER "  + "Final Score: " +score, 200,245);
+			g.drawString("Press Enter to Restart", 225,295);
 		}
 	}
 	
 	public void restart() {
+		
+        snakeHead = new Tile(5, 5);
+        snakeBody.clear();
+        placeFood();
+        velocityX = 0;
+        velocityY = 0;
+        gameOver = false;
+        score = 0;
+        gameLoop.restart();
+        repaint();
+		
 		
 	}
 	

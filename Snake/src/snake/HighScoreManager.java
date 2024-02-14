@@ -13,7 +13,7 @@ public class HighScoreManager {
 	
 	public static void saveHighScore(int score) {
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH, true))){
-			writer.write(score);
+			writer.write(Integer.toString(score));
 			writer.newLine();
 		}
 		catch (IOException e) {
